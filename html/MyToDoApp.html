@@ -1,26 +1,73 @@
 <!doctype html>
 <html lang="fr" ng-app="myApp">
+
 <head>
     <meta charset="UTF-8">
     <title>{{titre}}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-slate-theme.css">
     <link rel="stylesheet" href="../css/anim.css">
 </head>
+
 <body>
+    <nav ng-controller=navController>
+        <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+            <li class="navbar-brand">MyToDoList Application</li>
+            <li class="active">
+                <a href="#todos" data-toggle="tab">ToDOs</a>
+            </li>
+            <li>
+                <a href="#profile" data-toggle="tab">Datas</a>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    About
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#help" data-toggle="tab">Aide</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#link" data-toggle="tab">GitHub :
+                            <img ng-src="http://www.gravatar.com/avatar/{{hash}}">
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <!--PANEL LISTING-->
+            <div id=listTodoDiv class="panel panel-warning col-xs-6 col-md-4" ng-controller=listController>
+                <div class="panel panel-heading">
+                    <span class="panel-title">Trucs à faire</span>
+                    <span class="pull-right">
+                        <input type="text" ng-model=filtre>
+                    </span>
+                </div>
 
-<div id=listTodoDiv ng-controller=listController>
-   <h4>Trucs à faire</h4>
-    <input type="text" ng-model=filtre>
-    <ul id=listTodo>
-        <li ng-repeat="todos"> model {{todo.id}}</li>
-    </ul>
-    
-</div>
+                <ul id=listTodo class="list-group">
+                    <li class="list-group-item" ng-repeat="todo in todos | filter : filtre">model {{todo}}</li>
+                </ul>
+            </div>
+            <!--PANEL DETAIL -->
+            <div id=detailTodoDiv class="panel panel-info col-xs-6 col-md-8" ng-controller=detailController>
+                <div class="panel-heading">
+                    <span class="panel-title">{{detail}}</span>
+                    <span class="pull-right"></span>
+                </div>
 
+                Contenu détail d'un todo.
+            </div>
+        </div>
+    </div>
 </body>
-    <script src="../lib/jquery.js"></script>
-    <script src="../lib/bootstrap.min.js"></script>
-    <script src="../lib/angular.js"></script>
-    <script src="../js/myApp.js"></script>
-    
+<script src="../lib/jquery.js"></script>
+<script src="../lib/bootstrap.min.js"></script>
+<script src="../lib/angular.js"></script>
+<script src="../js/myApp.js"></script>
+
 </html>
