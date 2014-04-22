@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>{{titre}}</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/anim.css">
+</head>
+<body>
+
+<div id=listTodoDiv ng-controller=listController>
+   <h4>Trucs à faire</h4>
+    <input type="text" ng-model=filtre>
+    <ul id=listTodo>
+        <li ng-repeat="todos"> model {{todo.id}}</li>
+    </ul>
+    
+</div>
+
+</body>
+    <script src="../lib/jquery.js"></script>
+    <script src="../lib/bootstrap.min.js"></script>
+    <script src="../lib/angular.js"></script>
+    <script src="../js/myApp.js"></script>
+    
+</html>
