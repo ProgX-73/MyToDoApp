@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/anim.css">
 </head>
 
-<body>
+<body ng-controller=eventController>
     <nav ng-controller=navController>
         <ul class="nav nav-tabs" style="margin-bottom: 15px;">
             <li class="navbar-brand">MyToDoList Application</li>
@@ -50,17 +50,18 @@
                 </div>
 
                 <ul id=listTodo class="list-group">
-                    <li class="list-group-item" ng-repeat="todo in todos | filter : filtre">model {{todo}}</li>
+                    <li class="list-group-item" ng-repeat="todo in todos | filter : filtre" ng-mouseover="go(todo.id);">model {{todo}}</li>
                 </ul>
             </div>
             <!--PANEL DETAIL -->
             <div id=detailTodoDiv class="panel panel-info col-xs-6 col-md-8" ng-controller=detailController>
                 <div class="panel-heading">
-                    <span class="panel-title">{{detail}}</span>
+                    <span class="panel-title"> Contenu détail d'un todo.</span>
                     <span class="pull-right"></span>
                 </div>
-
-                Contenu détail d'un todo.
+                <div id=contenu ></div>
+                {{sel}}
+               
             </div>
         </div>
     </div>
