@@ -7,17 +7,45 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-slate-theme.css">
     <link rel="stylesheet" href="../css/anim.css">
+    <style>
+        .modal {
+            margin: auto;
+            background-color: rgba(114, 144, 177, 0.95);
+            border-radius: 12px;
+            border-style: outset;
+            border-color: rgb(76, 91, 108);
+            border-width: 1px;
+          
+            max-height: 80%;
+            height: 60%;
+            width: 40%;
+        }
+        li:hover {
+            background-color: rgba(226, 224, 125, 0.62);
+        }
+        #listTodo {
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .modal-header{
+            background-color: rgba(248,148,6,0.75);
+            font-family: cursive;
+            color: dark-grey;
+            border-width:white;;40%         
+        }
+    </style>
 </head>
 
-<body ng-controller=eventController>
-    <nav ng-controller=navController>
+<body>
+     <div class="container-fluid">
+    <nav class="nav" ng-controller=navController>
         <ul class="nav nav-tabs" style="margin-bottom: 15px;">
             <li class="navbar-brand">MyToDoList Application</li>
             <li class="active">
                 <a href="#todos" data-toggle="tab">ToDOs</a>
             </li>
             <li>
-                <a href="#profile" data-toggle="tab">Datas</a>
+                <a href="#datas" data-toggle="tab">Datas</a>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -38,32 +66,95 @@
             </li>
         </ul>
     </nav>
-    <div class="container-fluid">
+    <!-- FORMULAIRE D'AJOUT MODAL -->
+
+    
+        <div id="myModal" class="modal  fade panel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="modalController">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3 id="myModalLabel" class="modal-titre">Nouvelle chose à faire :</h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="text" name="titre" ng-model="titre" placeholder="Titre">
+                    <input type="color" name="color" ng-model="color" value="black">
+                    <br>
+                    <ul>
+                    <li ng-repeat="t in tache">
+                        <input placeholder="Tâche" ng-model="t.o"><a href ng-click="tache.splice($index, 1)"><span class="glyphicon glyphicon-remove"></span></a>
+                    </li>
+                    <li>
+                        
+                        <button class="btn btn-sm inverse" ng-click="tache.push({})"><span class="glyphicon glyphicon-hand-right">Ajouter une tâche</span></button>
+                    </li>
+                    </ul>
+                    <!--div id=tache>
+                        <input type="text" name="tache" ng-model="tache.0" placeholder="Tache">
+                        <button class="btn-primary img-rounded glyphicon glyphicon-plus" title="Ajouter une tâche" ng-click="tache.push({})"></button>
+                        <br>
+                    </div-->
+                    <input type="date" name="date_max" ng-model="date_max" placeholder="Echéance">
+                    <br>
+                </form>
+
+                <button class="btn-sm btn-primary" data-dismiss="modal" ng-click="saveTodo()">Enregistrer</button>
+                <button class="btn-sm pull-right" data-dismiss="modal">Annuler</button>
+            </div>
+
+        </div>
+   
+    <!-----------TABS PANELS ----------------->
+    <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active in" id="todos">
         <div class="row">
             <!--PANEL LISTING-->
             <div id=listTodoDiv class="panel panel-warning col-xs-6 col-md-4" ng-controller=listController>
+
                 <div class="panel panel-heading">
                     <span class="panel-title">Trucs à faire</span>
                     <span class="pull-right">
                         <input type="text" ng-model=filtre>
+                        <button class="btn-primary img-rounded glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal">
                     </span>
                 </div>
-
+                <!-- LISTE DES TODOS -->
                 <ul id=listTodo class="list-group">
-                    <li class="list-group-item" ng-repeat="todo in todos | filter : filtre" ng-mouseover="go(todo.id);">model {{todo}}</li>
+                    <li class="list-group-item" ng-repeat="todo in todos | filter : filtre" ng-mouseover="go(todo._id);" style="background-color:{{todo.color}}">
+                        <div id=todoTemplate  >{{todo.titre}} {{todo.date_max}} </div>
+                    </li>
                 </ul>
             </div>
-            <!--PANEL DETAIL -->
+            <!--********************-->
+                <!--PANEL DETAIL -->
+            <!--********************-->
             <div id=detailTodoDiv class="panel panel-info col-xs-6 col-md-8" ng-controller=detailController>
-                <div class="panel-heading">
-                    <span class="panel-title"> Contenu détail d'un todo.</span>
+                <div class="panel panel-heading">
+                    <span class="panel-title">Détail de la tâche.</span>
                     <span class="pull-right"></span>
                 </div>
-                <div id=contenu ></div>
-                {{sel}}
-               
+                <div id=contenu>
+                Concerné : {{sel.user}}
+                à faire : 
+                    <ul>
+                        <li ng-repeat="ta in sel.tache">{{ta.o}}</li>
+                    </ul>
+                à faire : 
+                    <ul>
+                            <li ng-repeat="td in sel.tache">{{td.o}}</li>
+                    </ul>
+                
+                </div>
+
+
             </div>
         </div>
+            </div>
+        <div class="tab-pane fade" id="datas">
+            Second TabPane
+            </div>
+            </div>
+            
+            
     </div>
 </body>
 <script src="../lib/jquery.js"></script>

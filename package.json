@@ -1,8 +1,0 @@
-{
-  "scripts": {
-    "start": "todo"
-  },
-    "name": "MyToDoApp",
-    "main": "./html/MyToDoApp.html"
-    
-}
