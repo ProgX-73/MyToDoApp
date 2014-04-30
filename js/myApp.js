@@ -55,6 +55,7 @@ app.controller('detailController', function ($scope, TodoService, $sce) {
 app.controller('modalController', function ($scope, TodoService, $rootScope) {
     $scope.tache = [{}];
 
+ 
     $scope.appendTache = function () {
         $("#tache").append('<input type="text" name="tache[]" ng-model="tache" placeholder="Tache">');
     }
@@ -96,6 +97,12 @@ app.factory('TodoService', function ($rootScope, $q) {
     var manager = {
         selection: {},
         save: function (todo) {
+            //Manipulation des tâches pour transformer les hashkeys sans $
+            taches = [];
+           alert(todo.tache);
+            
+            todo.tache = (JSON.parse(todo.tache));
+            alert(todo);
             that = this;
             var deferred = $q.defer();
             MongoClient.connect('mongodb://127.0.0.1:27017/todoDB', function (err, db) {
@@ -117,6 +124,7 @@ app.factory('TodoService', function ($rootScope, $q) {
 
             });
             return deferred.promise;
+            
         },
         find: function (id) {
             var theTodo = {};
@@ -134,7 +142,7 @@ app.factory('TodoService', function ($rootScope, $q) {
                 if (err) deferred.reject('Impossible de se connecter à la base');
                 else {
                     var collection = db.collection('todos');
-                    var data = collection.find().toArray(function (err, results) {
+                    var data = collection.find().sort( { date_max: -1 } ).toArray(function (err, results) {
 
                         if (err)
                             deferred.reject('Impossible de récupérer les todos.');

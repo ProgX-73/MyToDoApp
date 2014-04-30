@@ -8,9 +8,13 @@
     <link rel="stylesheet" href="../css/bootstrap-slate-theme.css">
     <link rel="stylesheet" href="../css/anim.css">
     <style>
+        input{
+            border-radius: 3px;
+            background-color: #eae7e7;
+        }
         .modal {
             margin: auto;
-            background-color: rgba(114, 144, 177, 0.95);
+            background-color: #555454;
             border-radius: 12px;
             border-style: outset;
             border-color: rgb(76, 91, 108);
@@ -20,9 +24,7 @@
             height: 60%;
             width: 40%;
         }
-        li:hover {
-            background-color: rgba(226, 224, 125, 0.62);
-        }
+      
         #listTodo {
             max-height: 450px;
             overflow-y: auto;
@@ -31,7 +33,21 @@
             background-color: rgba(248,148,6,0.75);
             font-family: cursive;
             color: dark-grey;
-            border-width:white;;40%         
+            border-width:white;
+            height:50px;
+            margin-top : 5px;
+            
+        }
+        #myModalLabel h3{
+            margin : 0px;
+        }
+        .todos {
+            padding: 5px;
+        }
+        .todos li{
+            padding: 2px;
+            width: auto;
+           
         }
     </style>
 </head>
@@ -58,8 +74,9 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#link" data-toggle="tab">GitHub :
-                            <img ng-src="http://www.gravatar.com/avatar/{{hash}}">
+                        <a href="#link" data-toggle="tab">
+                             <a href="https://github.com/ProgX-73" target="_blank">GitHub :
+                            <img ng-src="http://www.gravatar.com/avatar/{{hash}}"></a>
                         </a>
                     </li>
                 </ul>
@@ -72,9 +89,9 @@
         <div id="myModal" class="modal  fade panel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="modalController">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3 id="myModalLabel" class="modal-titre">Nouvelle chose à faire :</h3>
+                <h4 id="myModalLabel">Nouvelle chose à faire :</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body todos">
                 <form>
                     <input type="text" name="titre" ng-model="titre" placeholder="Titre">
                     <input type="color" name="color" ng-model="color" value="black">
@@ -83,17 +100,17 @@
                     <li ng-repeat="t in tache">
                         <input placeholder="Tâche" ng-model="t.o"><a href ng-click="tache.splice($index, 1)"><span class="glyphicon glyphicon-remove"></span></a>
                     </li>
-                    <li>
+                   
                         
-                        <button class="btn btn-sm inverse" ng-click="tache.push({})"><span class="glyphicon glyphicon-hand-right">Ajouter une tâche</span></button>
-                    </li>
+                        <button class=" btn-sm" ng-click="tache.push({})"><span class="glyphicon glyphicon-hand-right">Ajouter une tâche</span></button>
+                         <input type="date" name="date_max" ng-model="date_max" placeholder="Echéance">
                     </ul>
                     <!--div id=tache>
                         <input type="text" name="tache" ng-model="tache.0" placeholder="Tache">
                         <button class="btn-primary img-rounded glyphicon glyphicon-plus" title="Ajouter une tâche" ng-click="tache.push({})"></button>
                         <br>
                     </div-->
-                    <input type="date" name="date_max" ng-model="date_max" placeholder="Echéance">
+                   
                     <br>
                 </form>
 
@@ -119,8 +136,9 @@
                 </div>
                 <!-- LISTE DES TODOS -->
                 <ul id=listTodo class="list-group">
-                    <li class="list-group-item" ng-repeat="todo in todos | filter : filtre" ng-mouseover="go(todo._id);" style="background-color:{{todo.color}}">
-                        <div id=todoTemplate  >{{todo.titre}} {{todo.date_max}} </div>
+                    <li class="list-group-item" ng-repeat="todo in todos | filter : filtre " ng-mouseover="go(todo._id);" style="background-color:{{todo.color}}">
+                        <div id=todoTemplate  >{{todo.titre}} <cite>{{todo.date_max}}</cite> </div>
+                        
                     </li>
                 </ul>
             </div>
@@ -138,11 +156,7 @@
                     <ul>
                         <li ng-repeat="ta in sel.tache">{{ta.o}}</li>
                     </ul>
-                à faire : 
-                    <ul>
-                            <li ng-repeat="td in sel.tache">{{td.o}}</li>
-                    </ul>
-                
+               
                 </div>
 
 
