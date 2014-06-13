@@ -1,6 +1,6 @@
 Projet MyToDoList :
 
-Apprentissage des techno web :
+Bases sur techno web :
 
 - AngularJS
 - Node JS
